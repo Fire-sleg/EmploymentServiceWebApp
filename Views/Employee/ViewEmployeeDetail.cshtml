@@ -1,0 +1,62 @@
+﻿@using EmploymentServiceWebApp.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+
+<link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@model UserPassword
+
+<form > @*asp-controller="Employee" asp-action="Edit" method="post" enctype="multipart/form-data"*@
+@*    <input asp-for="Vacancy.Id" class="form-control" hidden value="@Model.Vacancy.Id"/>
+    <input asp-for="Address.Id" class="form-control" hidden value="@Model.Address.Id"/>
+     <input asp-for="Vacancy.EmployerId" class="form-control" hidden value="@Model.Vacancy.EmployerId"/>
+    <input asp-for="Vacancy.AddressId" class="form-control" hidden value="@Model.Vacancy.AddressId"/>
+    <input asp-for="Vacancy.VacancyEmployeeId" class="form-control" hidden value="@Model.Vacancy.VacancyEmployeeId"/>*@
+    <div class="row" style="justify-content:center">
+        <div class="col-md-4">
+            <h2 style="padding-bottom:10px;">Редагувати шукача</h2>
+            <div class="form-floating mb-3">
+                <input asp-for="User.Email" type="email" class="form-control" value="@Model.User.Email"/>
+                <label asp-for="User.Email" class="form-label">Електронна пошта</label>
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-floating mb-3">
+                <input asp-for="User.PhoneNumber" type="number" class="form-control" value="@Model.User.PhoneNumber"/>
+                <label asp-for="User.PhoneNumber" class="form-label">Номер телефону</label>
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Password" type="password" class="form-control" value="@Model.Password" >
+                <label asp-for="Password" class="form-label">Пароль</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-floating mb-3">
+                <input asp-for="User.Name" type="text" class="form-control" value="@Model.User.Name" />
+                <label asp-for="User.Name" class="form-label">Ім'я'</label>
+                <span asp-validation-for="User.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="User.SurName" type="text" class="form-control" value="@Model.User.SurName" />
+                <label asp-for="User.SurName" class="form-label">Прізвище</label>
+                <span asp-validation-for="User.SurName" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="User.MiddleName" type="text" class="form-control" value="@Model.User.MiddleName" />
+                <label asp-for="User.MiddleName" class="form-label">По-батькові</label>
+                 <span asp-validation-for="User.MiddleName" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="w-100 mb-3 btn btn-lg btn-primary">Зберегти зміни</button>
+        </div>
+    </div>
+            
+</form>

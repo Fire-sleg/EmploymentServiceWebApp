@@ -1,0 +1,42 @@
+﻿@page
+@model ResumeModel
+@{
+    ViewData["Title"] = "Резюме";
+    ViewData["ActivePage"] = ManageNavPages.Resume;
+    byte[] resume = await Model.GetResumeAsync();
+    //var vacancies = await Model.GetListVacancies();
+}
+<h3>@ViewData["Title"]</h3>
+@*<partial name="_StatusMessage" for="StatusMessage" />*@
+@*<div class="row">
+    <div class="col-md-6">
+        @foreach(var vac in vacancies)
+        {
+            <div>
+                <h1>Hello</h1>
+            </div>
+        }
+
+    </div>
+</div>*@
+<div class="row">
+    @if(resume != null)
+    {
+         <a href="data:application/pdf;base64,@Convert.ToBase64String(resume)" download="resume.pdf">Скачати Резюме PDF</a>
+        
+
+
+    }@*accept=".pdf"  enctype="multipart/form-data" *@
+    <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Завантажте своє резюме у форматі PDF</label>
+              <input asp-for="Input.PdfFile" class="form-control" type="file" id="formFile" > 
+              <button type="submit" class="w-100 mb-3 btn btn-lg btn-primary">Зберегти резюме</button>
+            </div>
+        </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,97 @@
+﻿@using EmploymentServiceWebApp.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = "Home Page";
+    var list = UserManager.Users.ToList();
+    var filterModel = new FilterModel();
+
+}
+<div id="head"><h1>Державний центр зайнятості</h1></div>
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+<div class="row">
+    <div class="col-5" id="filter">
+        <form asp-controller="Vacancy" asp-action="Filter" method="post">
+            
+
+            <div class="form-floating mb-3">
+                <p>Професія</p>
+                <div><input asp-for="@filterModel.Position" class="form-control" type="text" /></div>
+            </div>
+            <div class="form-floating mb-3">
+            <p>Місто</p>
+              <div><input asp-for="@filterModel.City" class="form-control" type="text" /></div>
+            </div>
+            <div class="form-floating mb-3" id="salary">
+                <p>Зарплата</p>
+                <div id="inps">
+                    <input asp-for="@filterModel.SalaryLow" class="form-control" type="number" value="" id="salaryLow"/>
+                  
+                    <div style="display:flex; align-items:center;"><span>—</span></div>
+                  <input asp-for="@filterModel.SalaryHigh" class="form-control" type="number"  value="" id="salaryHigh"/>
+                 
+                </div>
+              
+            </div>
+        <button id="filterSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Шукати</button>
+        </form>
+    </div>
+    <div class="col-5" id="box-end">
+        <div class="links">
+            <a asp-controller="Vacancy" asp-action="ViewVacancy" class="w-100 btn btn-lg btn-primary">Шукаю роботу</a>
+            <a asp-controller="Vacancy" asp-action="Create" class="w-100 btn btn-lg btn-primary">Надаю роботу</a>
+        </div>
+     
+    </div>
+
+</div>
+
+<h2 >Новини</h2>
+<hr />
+<div class="row" id="news">
+    <div class="col-sm-4">
+        <div class="news">
+            <h4>Визначено переможців по урядовій програмі "Власна справа"</h4>
+            <br />
+            <p>Визначено чергових переможців по урядовій програмі "Власна справа", 
+                які подавали заяви на отримання мікрогрантів у період з 10 по 23 квітня поточного року. 
+                Всього, з урахуванням доопрацьованих заяв попередніх періодів було ухвалено 323 позитивні 
+                рішення на загальну суму майже 77 млн грн. Цього разу найбільше всього переможців з Львівської, 
+                Київської, Рівненської, Вінницької областей та м. Києва. Передбачається, що переможці створять 727 нових робочих місць.</p>
+            <p>12.05.2023</p>
+            <br />
+        </div>
+    </div>
+    
+    <div class="col-sm-4">
+        <div class="news">
+            <h4>Визначено переможців по урядовій програмі "Власна справа"</h4>
+            <br />
+            <p>Визначено чергових переможців по урядовій програмі "Власна справа", 
+                які подавали заяви на отримання мікрогрантів у період з 10 по 23 квітня поточного року. 
+                Всього, з урахуванням доопрацьованих заяв попередніх періодів було ухвалено 323 позитивні 
+                рішення на загальну суму майже 77 млн грн. Цього разу найбільше всього переможців з Львівської, 
+                Київської, Рівненської, Вінницької областей та м. Києва. Передбачається, що переможці створять 727 нових робочих місць.</p>
+            <p>12.05.2023</p>
+            <br />
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="news">
+            <h4>Визначено переможців по урядовій програмі "Власна справа"</h4>
+            <br />
+            <p>Визначено чергових переможців по урядовій програмі "Власна справа", 
+                які подавали заяви на отримання мікрогрантів у період з 10 по 23 квітня поточного року. 
+                Всього, з урахуванням доопрацьованих заяв попередніх періодів було ухвалено 323 позитивні 
+                рішення на загальну суму майже 77 млн грн. Цього разу найбільше всього переможців з Львівської, 
+                Київської, Рівненської, Вінницької областей та м. Києва. Передбачається, що переможці створять 727 нових робочих місць.</p>
+            <p>12.05.2023</p>
+            <br />
+        </div>
+    </div>
+</div>
+
+

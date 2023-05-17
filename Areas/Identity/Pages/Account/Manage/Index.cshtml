@@ -1,0 +1,68 @@
+﻿@page
+@using System.Security.Claims;
+@model IndexModel
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Профіль";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+    var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
+    var user = await UserManager.GetUserAsync(HttpContext.User);
+}
+
+<h3>@ViewData["Title"]</h3>
+@*<h3>@user.UserName</h3>*@
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            @*<div class="form-floating mb-3">
+                <input asp-for="Input.Username" class="form-control" placeholder="Ім'я користувача" value="@user.UserName"/>
+                <label asp-for="Input.Username" class="form-label"></label>
+            </div>*@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Номер телефону" value="@user.PhoneNumber"/>
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            @if(currentUserRole == "Employer")
+            {
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.CompanyName" class="form-control" placeholder="Назва компанії" value="@user.CompanyName"/> @*value=""*@
+                    <label asp-for="Input.CompanyName" class="form-label">Назва компанії</label>
+                    <span asp-validation-for="Input.CompanyName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea asp-for="Input.Description" type="text" class="form-control" rows="3" placeholder="Опис компанії">@user.Description</textarea> 
+                    <label asp-for="Input.Description" class="form-label">Опис компанії</label>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
+            }else if(currentUserRole == "Employee")
+            {
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Name" class="form-control" placeholder="Ім'я" value="@user.Name"/>
+                    <label asp-for="Input.Name" class="form-label"></label>
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.MiddleName" class="form-control" placeholder="По-батькові" value="@user.MiddleName"/>
+                    <label asp-for="Input.MiddleName" class="form-label"></label>
+                    <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.SurName" class="form-control" placeholder="Прізвище" value="@user.SurName"/>
+                    <label asp-for="Input.SurName" class="form-label"></label>
+                    <span asp-validation-for="Input.SurName" class="text-danger"></span>
+                </div>
+            }
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Зберегти</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

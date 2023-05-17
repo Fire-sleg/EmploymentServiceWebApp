@@ -1,0 +1,14 @@
+﻿.form-floating {
+    border: solid 1px #b0b0b0;
+    padding:6%;
+}
+p {
+    font-size: 1.3em;
+    text-align:justify;
+}
+.data {
+    margin-left: 10%;
+}
+h2{
+    padding-bottom:2%;
+}

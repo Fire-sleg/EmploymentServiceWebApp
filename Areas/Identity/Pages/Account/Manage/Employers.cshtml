@@ -1,0 +1,59 @@
+﻿@page
+@using System.Security.Claims;
+@using EmploymentServiceWebApp.Areas.Identity.Data;
+@using EmploymentServiceWebApp.Models;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model EmployersModel
+@{
+	var employers = await UserManager.GetUsersInRoleAsync("Employer");
+}
+<style>
+    .vacancy {
+    cursor: pointer;
+    border: solid 1px #b0b0b0; /*#ff6a00*/
+    height: auto;
+    width: 100%;
+    padding: 50px 30px 50px 30px;
+    transition: scale 0.3s ease-in-out;
+}
+    .vacancy:hover {
+        scale: 1.05;
+        box-shadow: 0px 0px 10px 1px #b0b0b0;
+    }
+
+.vacancy-position-salary {
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+    .vacancy-position-salary:first-child {
+        align-self: flex-start;
+    }
+
+    .vacancy-position-salary:last-child {
+        align-self: flex-end;
+    }
+    a {
+    text-decoration: none;
+    outline: none;
+    color:black;
+
+}
+</style>
+
+@foreach(var empl in employers)
+{
+    <form asp-controller="Employer" asp-action="DeleteEmployer" method="post">
+        <div class="vacancy mb-3" >
+            <div class="vacancy-position-salary">
+                <h3>@empl.CompanyName</h3>
+                <h2>@empl.Email</h2>
+            </div>
+        </div> 
+        <input hidden type="text" name="id" value="@empl.Id">
+        <button style="height:20%;" class="w-100 mb-3 btn btn-lg btn-primary" >Видалити</button>
+    </form>
+}

@@ -1,0 +1,22 @@
+﻿@using EmploymentServiceWebApp.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+    byte[] fileBytes = user.ResumePdf;
+}
+
+<h1>Резюме надіслано!</h1>
+<p>Чекайте листа з результатами від роботодавця.</p>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

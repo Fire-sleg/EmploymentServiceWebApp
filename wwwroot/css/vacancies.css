@@ -1,0 +1,130 @@
+﻿.list-vacancies {
+    display: grid;
+    grid-column-gap: 100px;
+    grid-row-gap: 40px;
+    width: 55%;
+    height: auto;
+    min-height: 400px;
+    margin-bottom: 20px;
+}
+a {
+    text-decoration: none;
+    outline: none;
+    color:black;
+}
+.vacancy {
+    cursor: pointer;
+    border: solid 1px #b0b0b0; /*#ff6a00*/
+    height: auto;
+    width: 100%;
+    padding: 30px;
+    transition: scale 0.3s ease-in-out;
+}
+    .vacancy:hover {
+        scale: 1.1;
+        box-shadow: 0px 0px 10px 1px #b0b0b0;
+    }
+
+.vacancy-position-salary {
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+    .vacancy-position-salary:first-child {
+        align-self: flex-start;
+    }
+
+    .vacancy-position-salary:last-child {
+        align-self: flex-end;
+    }
+
+.filter {
+    /*position: absolute;*/
+    /*float: right;*/
+    align-self: flex-start;
+    height: fit-content;
+    width: 25%;
+    border: solid 1px #b0b0b0;
+    padding: 30px;
+    right: 5%;
+    bottom: inherit;
+    
+}
+
+.filter-inp {
+    display: grid;
+    margin: 15px;
+}
+
+    .filter-inp input {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+.row {
+    flex-wrap:nowrap;
+        justify-content:space-around;
+}
+
+@media (min-width: 768px){
+    .filter {
+        width: 33.33333%;
+        margin-left:5%;
+    }
+    .list-vacancies {
+        width: 66.66667%;
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .filter, .list-vacancies {
+        width: 100%;
+    }
+    .row {
+        flex-wrap: wrap-reverse;
+    }
+    .list-vacancies{
+        padding-top:5%;
+    }
+}
+#inps {
+    display: flex;
+    justify-content: space-between;
+}
+    #inps > input {
+        width: 40%;
+    }
+
+/*#salary{
+    display:flex;
+    justify-content:space-between;
+}
+#salary input{
+    width: 40%;
+}*/
+
+/*@media (min-width: 768px)
+<style>
+.el-col-sm-16 {
+    width: 66.66667%;
+}*/
+/*@media (max-width: 768px)
+<style>
+.el-col-xs-24 {
+    width: 100%;
+}*/
+/*vac-list*/
+
+/*@media (min-width: 768px)
+<style>
+.el-col-sm-8 {
+    width: 33.33333%;
+}*/
+/*@media (max-width: 768px)
+<style>
+.el-col-xs-24 {
+    width: 100%;
+}*/
+/*filter*/

@@ -1,0 +1,12 @@
+﻿p, h3{
+    text-align:justify;
+}
+.row{
+    justify-content:space-between;
+}
+
+@media (max-width: 768px) {
+    .col-6 {
+        width: 100%;
+    }
+}

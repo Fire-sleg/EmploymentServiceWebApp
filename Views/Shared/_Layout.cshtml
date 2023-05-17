@@ -1,0 +1,161 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using EmploymentServiceWebApp.Areas.Identity.Data
+@using System.Security.Claims;
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
+    var user = await UserManager.GetUserAsync(User);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EmploymentServiceWebApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EmploymentServiceWebApp.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Державний центр зайнятості</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @*<li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>*@
+                        <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vacancy" asp-action="ViewVacancy">Вакансії</a>
+                                </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            @if(currentUserRole == "Employer" || currentUserRole == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vacancy" asp-action="Create">Створити вакансію</a>
+                                </li>
+                            }
+                            @*else if(currentUserRole == "Employee")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vacancy" asp-action="ViewVacancy">Вакансії</a>
+                                </li>
+                            }*@
+                        }
+                        <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="News" asp-action="Index">Новини</a>
+                                </li>
+
+                    </ul>
+                </div>
+            </div>
+            <partial name="_LoginPartial" />
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3 h-100">
+            @RenderBody()
+        </main>
+    </div>
+    <style>
+        a {
+    /*color: #0D6EFD;*/
+    color:black;
+    text-decoration: none;
+    outline: none;
+}
+    a:hover {
+        color: #0077cc;
+    }
+    </style>
+    <footer >@*text-muted*@@*class="fixed-bottom"*@
+        <div class="container">
+            @*&copy; 2023 - EmploymentServiceWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+            <div class="row">
+      <div class="col-sm-4">
+        <h5>Державний центр зайнятості</h5>
+        <ul class="list-unstyled">
+          <li>м.Київ, 01601, вул.Еспланадна, 8/10</li>
+          <li>e-mail: 17@es.dcz.gov.ua,</li>
+          <li>+380938345700</li>
+          <li>+380990385889</li>
+          <li>+380974615136</li>
+        </ul>
+        <div class="d-flex justify-content-start">
+            <a href="https://www.facebook.com/zaniatist">Facebook</a>
+            <span>&nbsp;/&nbsp;</span>
+            <a href="https://www.youtube.com/channel/UCzchYdwO8nMJ3I21f089unw">Youtube</a>
+        </div>
+        
+      </div>
+      <div class="col-sm-4">
+        <h5>Посилання</h5>
+        <ul class="list-unstyled">
+          <li><a  asp-controller="Home" asp-action="Index" >Головна</a></li>
+          <li><a  asp-controller="Vacancy" asp-action="ViewVacancy" >Вакансії</a></li>
+          <li><a  asp-controller="News" asp-action="Index" >Новини</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4 ">
+        <h5>Державні інформаційні ресурси</h5>
+            <ul class="list-unstyled">
+          <li><a href="http://www.president.gov.ua/">Президент України</a></li>
+          <li><a href="https://nazk.gov.ua/uk/">Національне агентство з питань запобігання корупції</a></li>
+          <li><a href="http://nads.gov.ua/">Національне агентство України з питань державної служби</a></li>
+          <li><a href="http://rada.gov.ua/">Верховна Рада України</a></li>
+          <li><a href="https://association4u.in.ua/">Урядова компанія EUКраїна</a></li>
+        </ul>
+      </div>
+    </div>
+        </div>
+    </footer>
+    @*<footer class="bg-dark text-light py-3" class="border-top footer text-muted">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <h5>Контакти</h5>
+        <ul class="list-unstyled">
+          <li>Адреса: вул. Петра Запорожця, 23, Київ, Україна</li>
+          <li>Телефон: +380 44 555 5555</li>
+          <li>Email: info@example.com</li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <h5>Посилання</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">Головна</a></li>
+          <li><a href="#">Про нас</a></li>
+          <li><a href="#">Контакти</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <h5>Підписатися на розсилку</h5>
+        <form>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Ваш email">
+          </div>
+          <button type="submit" class="btn btn-primary">Підписатися</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</footer>*@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

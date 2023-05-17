@@ -1,0 +1,29 @@
+﻿@using System.Security.Claims;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
+}
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Профіль</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Електронна пошта</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Пароль</a></li>
+    @if (hasExternalLogins)
+    {
+        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+    }
+    @*<li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Двофакторна аутентифікація</a></li>*@
+    @*<li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Персональні дані</a></li>*@
+    <li class="nav-item"><a class="nav-link @ManageNavPages.VacanciesNavClass(ViewContext)" id="vacancies" asp-page="./Vacancies">Вакансії</a></li>
+    @if(currentUserRole == "Employee")
+    {
+        <li class="nav-item"><a class="nav-link @ManageNavPages.ResumeNavClass(ViewContext)" id="resume" asp-page="./Resume">Резюме</a></li>
+    }
+    else if(currentUserRole == "Admin")
+    {
+        <li class="nav-item"><a class="nav-link @ManageNavPages.EmployersNavClass(ViewContext)" id="employers" asp-page="./Employers">Роботодавці</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.EmployeesNavClass(ViewContext)" id="employees" asp-page="./Employees">Шукачі</a></li>
+    }
+</ul>

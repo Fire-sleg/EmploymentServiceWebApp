@@ -1,0 +1,135 @@
+﻿@using EmploymentServiceWebApp.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model VacancyAddress
+@inject UserManager<User> UserManager
+@{
+    
+}
+
+
+
+        
+        <form asp-controller="Vacancy" asp-action="Create" method="post">
+            
+            
+            <div class="row" style="justify-content:center">
+                
+                @*<hr />*@
+            <div class="col-md-4">
+                <h2 style="padding-bottom:10px;">Створити вакансію</h2>
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.Position" type="text" class="form-control" required/>
+                    <label asp-for="Vacancy.Position" class="form-label">Посада</label>
+                    <span asp-validation-for="Vacancy.Position" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.Salary" type="number" class="form-control" value="" required/>
+                    <label asp-for="Vacancy.Salary" class="form-label">Зарплата</label>
+                    <span asp-validation-for="Vacancy.Salary" class="text-danger"></span>
+                </div>
+
+
+
+
+
+                <div class="form-floating mb-3">
+                    <textarea asp-for="Vacancy.Duties" type="text" class="form-control" value="" required rows="3"/></textarea>
+                    <label asp-for="Vacancy.Duties" class="form-label">Обов'язки</label>
+                    <span asp-validation-for="Vacancy.Duties" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.ModeOfOperation" type="text" class="form-control" value="" />
+                    <label asp-for="Vacancy.ModeOfOperation" class="form-label">Режим роботи</label>
+                    <span asp-validation-for="Vacancy.ModeOfOperation" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.NatureOfWorkPerformed" type="text" class="form-control" value="" />
+                    <label asp-for="Vacancy.NatureOfWorkPerformed" class="form-label">Характер роботи</label>
+                    <span asp-validation-for="Vacancy.NatureOfWorkPerformed" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.Additionally" type="text" class="form-control" value="" />
+                    <label asp-for="Vacancy.Additionally" class="form-label">Додатково</label>
+                    <span asp-validation-for="Vacancy.Additionally" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.EducationLevel" type="text" class="form-control" value="" />
+                    <label asp-for="Vacancy.EducationLevel" class="form-label">Освітньо-кваліфікаційний рівень</label>
+                    <span asp-validation-for="Vacancy.EducationLevel" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.Profession" type="text" class="form-control" value="" />
+                    <label asp-for="Vacancy.Profession" class="form-label">Професія/спеціальність</label>
+                    <span asp-validation-for="Vacancy.Profession" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Vacancy.WorkExperience" type="number" class="form-control" value="" />
+                    <label asp-for="Vacancy.WorkExperience" class="form-label">Стаж роботи</label>
+                    <span asp-validation-for="Vacancy.WorkExperience" class="text-danger"></span>
+                </div>
+
+
+
+
+
+
+
+
+
+                <h3 style="padding-bottom:10px;">Адреса</h3>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Address.Region" type="text" class="form-control" />
+                    <label asp-for="Address.Region" class="form-label">Регіон</label>
+                    <span asp-validation-for="Address.Region" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Address.District" type="text" class="form-control" />
+                    <label asp-for="Address.District" class="form-label">Район</label>
+                    <span asp-validation-for="Address.District" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Address.City" type="text" class="form-control" required/>
+                    <label asp-for="Address.City" class="form-label">Місто</label>
+                    <span asp-validation-for="Address.City" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Address.Street" type="text" class="form-control" required/>
+                    <label asp-for="Address.Street" class="form-label">Вулиця</label>
+                    <span asp-validation-for="Address.Street" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Address.BuildingNumber" type="number" class="form-control" value="" required/>
+                    <label asp-for="Address.BuildingNumber" class="form-label">Будинок</label>
+                    <span asp-validation-for="Address.BuildingNumber" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="w-100 mb-3 btn btn-lg btn-primary">Створити</button>
+            </div>
+            @*<div class="col-md-4">
+                <div class="form-floating mb-3">
+                    <input asp-for="Address.City" type="text" class="form-control" />
+                    <label asp-for="Address.City" class="form-label">Місто</label>
+                    <span asp-validation-for="Address.City" class="text-danger"></span>
+                </div>
+            </div>*@
+            </div>
+            
+        </form>
+
+
+
+

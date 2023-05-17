@@ -1,0 +1,105 @@
+﻿@using EmploymentServiceWebApp.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+
+<link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+	var userId = SignInManager.UserManager.GetUserId(User);
+	var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
+	string address = "";
+	if(Model.Address.Region != "")
+	{
+		address += Model.Address.Region;
+	}
+	if(Model.Address.District != "")
+	{
+		address += Model.Address.District;
+	}
+	address +=   Model.Address.City + ", "
+				+ Model.Address.Street + ", "
+				+ Model.Address.BuildingNumber;
+	string age = "";
+	if (Model.Vacancy.WorkExperience % 10 == 1 && Model.Vacancy.WorkExperience/10 != 1)
+	{
+		age = "рік";
+
+	}
+	else if ((Model.Vacancy.WorkExperience % 10 == 2 || Model.Vacancy.WorkExperience % 10 == 3 || Model.Vacancy.WorkExperience % 10 == 4) && Model.Vacancy.WorkExperience/10 != 1)
+	{
+		age = "роки";
+	}
+	else
+	{
+		age = "років";
+	}
+	var user = await UserManager.GetUserAsync(User);
+	var EmployerId = Model.Vacancy.EmployerId;
+	var Employer = await UserManager.FindByIdAsync(EmployerId);
+
+}
+
+<div class="row" style="justify-content:center; padding-top:3%;">
+	@*<h1>Деталі вакансії</h1>*@
+	<div class="col-md-6" >
+		@*<h2 style="padding-bottom:10px;">Опис</h2>*@
+			<div class="form-floating mb-4">
+				<h2>Про компанію</h2>
+				<p>Назва компанії: @Employer.CompanyName</p>
+               @* <p ><b>Назва компанії: <span style="color: rgb(11, 94, 215); ">@Employer.CompanyName</span></b></p> @*/*font-size:1.8em;*/*@
+				<p>Опис компанії: </p>
+				<p class="data">@Employer.Description</p>
+            </div>
+			<div class="form-floating mb-4">
+                <p style="color: rgb(11, 94, 215)"><b>№ вакансії: @Model.Vacancy.Id</b></p>
+				<p>Дата створення: @Model.Vacancy.Date</p>
+				<p>Посада: @Model.Vacancy.Position</p>
+				<p>Зарпалата: @Model.Vacancy.Salary грн</p>
+				<p>Адреса: @address</p>
+            </div>
+			<div class="form-floating mb-4">
+				<h2>Опис</h2>
+                <p>Завдання та обов'язки:</p>
+				<p  class="data">@Model.Vacancy.Duties</p>
+				<p>Режим роботи: </p>
+				<p class="data">@Model.Vacancy.ModeOfOperation</p>
+				<p>Характер виконуваної роботи: </p>
+				<p class="data">@Model.Vacancy.NatureOfWorkPerformed</p>
+				@if(!string.IsNullOrEmpty(@Model.Vacancy.Additionally))
+				{
+					<p>Додатково: </p>
+					<p class="data">@Model.Vacancy.Additionally</p>
+				}
+				
+			</div>
+
+
+			<div class="form-floating mb-4">
+				<h2>Вимоги до кандидата</h2>
+                <p>Освітньо-кваліфікаційний рівень:</p>
+				<p  class="data">@Model.Vacancy.EducationLevel</p>
+				<p>Стаж роботи: </p>
+				<p class="data">@Model.Vacancy.WorkExperience @age</p>
+				<p>Професія/спеціальність: </p>
+				<p class="data">@Model.Vacancy.Profession</p>
+			</div>
+			@if(currentUserRole == "Employee")
+			{
+				@if(user.ResumePdf==null)
+				{
+				<h4>Для подачі резюме на вакансію, завантажте його в особистому кабінеті.</h4>
+			}
+				else
+				{
+					<form asp-controller="Vacancy" asp-action="Upload" method="post">
+						<input type="hidden" name="vacancyId" value="@Model.Vacancy.Id" />
+						<button type="submit" class="w-100 mb-3 btn btn-lg btn-primary">Надіслати резюме</button>
+					</form>
+				}
+				
+			}
+			
+	</div>
+</div>

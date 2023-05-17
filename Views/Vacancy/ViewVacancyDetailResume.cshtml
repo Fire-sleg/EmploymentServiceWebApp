@@ -1,0 +1,103 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+<style>
+    .list-vacancies {
+    display: grid;
+    grid-column-gap: 100px;
+    grid-row-gap: 40px;
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    margin-bottom: 20px;
+}
+a {
+    text-decoration: none;
+    outline: none;
+    color:black;
+}
+.vacancy {
+    cursor: pointer;
+    border: solid 1px #b0b0b0; /*#ff6a00*/
+    height: auto;
+    width: 100%;
+    padding: 30px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.vacancy-position-salary {
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+    .vacancy-position-salary:first-child {
+        align-self: flex-start;
+    }
+
+    .vacancy-position-salary:last-child {
+        align-self: flex-end;
+    }
+
+.list-resumes{
+    display: grid;
+    grid-column-gap: 100px;
+    grid-row-gap: 40px;
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    margin-bottom: 20px;
+    
+}
+.resume{
+    display:flex;
+    width:100%;
+    justify-content:space-between;
+    align-items:center;
+    border: solid 1px #b0b0b0;
+    padding:2%;
+}
+</style>
+<h1>Резюме</h1>
+@*<div class="list-resumes">*@
+        @foreach(var user in Model)
+        {
+             <div class="resume">
+                 <div class="col-4">
+                     <p>@user.Name @user.SurName</p>
+                     <p>@user.Email</p>
+                 </div>
+                 @{var nameResume = "Резюме_" + @user.Name + "_" + @user.SurName + ".pdf" ;}
+                <a href="data:application/pdf;base64,@Convert.ToBase64String(@user.ResumePdf)" download=@nameResume>Скачати Резюме PDF</a>
+            </div>
+        }
+    @*@{
+        var userL = "lll";
+    }
+    <div class="row vacancy">
+         <div class="col-4 vacancy-position-salary">
+              <p>@userL</p>
+              <p>@userL</p>
+         </div>
+         <a >Скачати Резюме PDF</a>
+    </div>
+    <div class="row vacancy">
+         <div class="col-4 vacancy-position-salary">
+              <p>@userL</p>
+              <p>@userL</p>
+         </div>
+         <a >Скачати Резюме PDF</a>
+    </div>
+    <div class="row vacancy">
+         <div class="col-4 vacancy-position-salary">
+              <p>@userL</p>
+              <p>@userL</p>
+         </div>
+         <a >Скачати Резюме PDF</a>
+    </div>*@
+       
+    </div>

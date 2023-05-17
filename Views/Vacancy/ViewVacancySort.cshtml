@@ -1,0 +1,98 @@
+﻿
+<link rel="stylesheet" href="~/css/vacancies.css" asp-append-version="true" />
+<h1>Шукати Вакансію</h1>
+<br />
+@*@model FilterModel*@
+@{
+    var filterModel = new FilterModel();
+    ViewBag.Sort = new SelectList(new[] {"Зарплатою", "Датою"});
+}
+<div class="row">
+
+	
+
+    <div class="list-vacancies"> 
+        @if(Model == null)
+        {
+             <h2>На жаль, вакансій поки немає</h2>
+        }
+        else if(Model.Count == 0)
+        {
+           <h2>На жаль, вакансій поки немає</h2>
+        }
+    else
+    {
+        @foreach(Vacancy vac in Model)
+        {
+            <a asp-controller="Vacancy" asp-action="ViewVacancyDetail" asp-route-id="@vac.Id">
+                <div class="vacancy" >
+                    <div class="vacancy-position-salary">
+                        <h3>@vac.Position</h3>
+                        <h2>@vac.Salary грн</h2>
+                    </div>
+        
+                    <span>@vac.Date </span>
+                    <span>@vac.Profession</span>
+                    @* <p>@vac.Address</p>*@
+                </div>
+            </a>
+            
+        }
+    }
+    </div>
+
+    <div class="filter" id="filter">  
+        <form asp-controller="Vacancy" asp-action="Filter" method="post">
+            <div class="form-floating mb-3">
+            <p>Місто</p>
+              <div><input asp-for="@filterModel.City" class="form-control" type="text" /></div>
+              @*<label asp-for="@filterModel.City" class="form-label">Місто</label>*@
+            </div>
+
+            <div class="form-floating mb-3">
+                <p>Професія</p>
+                <div><input asp-for="@filterModel.Position" class="form-control" type="text" /></div>
+              
+                  @*<label asp-for="@filterModel.Position" class="form-label">Професія</label>*@
+            </div>
+
+            <div class="form-floating mb-3" @*id="salary"*@>
+                <p>Зарплата</p>
+                <div id="inps">
+                    <input asp-for="@filterModel.SalaryLow" class="form-control" type="number" value="" id="salaryLow"/>
+                  @*<label for="salaryLow" class="form-label">Зарплата від</label>*@
+                    <div style="display:flex; align-items:center;"><span>—</span></div>
+                  <input asp-for="@filterModel.SalaryHigh" class="form-control" type="number"  value="" id="salaryHigh"/>
+                  @*<label for="salaryHigh" class="form-label" id="wrongInp">Зарплата до</label>*@
+                </div>
+              
+            </div>
+        <div class="form-floating mb-3">
+            <p>Сортувати за</p>
+            <div><select class="form-select" asp-for="@filterModel.Sort" asp-items="@ViewBag.Sort" class="form-control" aria-required="true"></select></div>
+            
+        </div>
+        <button id="filterSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Шукати</button>
+        </form>
+        
+
+        @*<div class="filter-inp">
+            <p>Професія</p>
+            <input type="text"/>
+        </div>
+        <div class="filter-inp">
+            <p>Дата</p>
+            <input type="text"/>
+        </div>
+        <div class="filter-inp">
+            <p>Зарплата</p>
+            <input type="text"/>
+        </div>*@
+    @*<div class="filter-inp">
+        <p>Я шукаю</p>
+        <input type="text"/>
+    </div>*@
+    </div>
+</div>
+<script src="~/js/vacancies.js" asp-append-version="true"></script>
+

@@ -1,0 +1,169 @@
+﻿@page
+@using System.Security.Claims;
+@using EmploymentServiceWebApp.Areas.Identity.Data;
+@using EmploymentServiceWebApp.Models;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model VacanciesModel
+@{
+    ViewData["Title"] = "Вакансії";
+    ViewData["ActivePage"] = ManageNavPages.Vacancies;
+    var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
+    var vacancies = await Model.GetListVacancies();
+    if (currentUserRole == "Employer")
+    {
+        vacancies = await Model.GetListVacancies();
+    }
+    else if (currentUserRole == "Employee")
+    {
+        vacancies = await Model.GetListVacanciesEmployee();
+    }
+    else
+    {
+        vacancies = await Model.GetWholeListVacancies();
+    }
+    var user = await UserManager.GetUserAsync(User);
+}
+<style>
+    .vacancy {
+    cursor: pointer;
+    border: solid 1px #b0b0b0; /*#ff6a00*/
+    height: auto;
+    width: 100%;
+    padding: 30px;
+    transition: scale 0.3s ease-in-out;
+}
+    .vacancy:hover {
+        scale: 1.05;
+        box-shadow: 0px 0px 10px 1px #b0b0b0;
+    }
+
+.vacancy-position-salary {
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+    .vacancy-position-salary:first-child {
+        align-self: flex-start;
+    }
+
+    .vacancy-position-salary:last-child {
+        align-self: flex-end;
+    }
+    a {
+    text-decoration: none;
+    outline: none;
+    color:black;
+
+}
+.resume{
+    /*display:flex;*/
+
+    
+}
+</style>
+<h3>@ViewData["Title"]</h3>
+@*<partial name="_StatusMessage" for="StatusMessage" />*@
+<div class="col-md-12">
+        @foreach(Vacancy vac in vacancies)
+        {
+            if(currentUserRole == "Employer" || currentUserRole == "Admin")
+            {
+                <form asp-controller="Vacancy" asp-action="EditVacancy" method="post">
+                <a asp-controller="Vacancy" asp-action="ViewVacancyDetailResume" asp-route-id="@vac.Id">
+                
+                    @{var Employer = await UserManager.FindByIdAsync(vac.EmployerId);}
+
+                    <div class="vacancy mb-3" >
+                        <div class="vacancy-position-salary">
+                            <h3>@vac.Position</h3>
+                            <h2>@vac.Salary грн</h2>
+                    </div>
+                    <span >@Employer.CompanyName</span>
+                    <span> &nbsp &nbsp @vac.Date </span>
+                </div>
+                
+                </a> 
+                    <input hidden type="number" name="id" value="@vac.Id">
+                    <button style="height:20%;" class="w-100 mb-3 btn btn-lg btn-primary" >Редагувати</button>
+                </form>
+                <form asp-controller="Vacancy" asp-action="DeleteVacancy" method="post">
+                    <input hidden type="number" name="id" value="@vac.Id">
+                    <button style="height:20%;" class="w-100 mb-3 btn btn-lg btn-primary" >Видалити</button>
+                </form>
+                @*<form asp-controller="Vacancy" asp-action="DeleteVacancy" method="post">
+                <a asp-controller="Vacancy" asp-action="ViewVacancyDetailResume" asp-route-id="@vac.Id">
+                
+                    @{var Employer = await UserManager.FindByIdAsync(vac.EmployerId);}
+
+                    <div class="vacancy mb-3" >
+                        <div class="vacancy-position-salary">
+                            <h3>@vac.Position</h3>
+                            <h2>@vac.Salary грн</h2>
+                    </div>
+                    <span >@Employer.CompanyName</span>
+                    <span> &nbsp &nbsp @vac.Date </span>
+                </div>
+                
+                </a> 
+                <input hidden type="number" name="id" value="@vac.Id">
+                <button style="height:20%;" class="w-100 mb-3 btn btn-lg btn-primary" >Видалити</button>
+                </form>*@
+                
+            }
+            else if (currentUserRole == "Employee")
+            {
+                <a asp-controller="Vacancy" asp-action="ViewVacancyDetail" asp-route-id="@vac.Id">
+                
+                @{var Employer = await UserManager.FindByIdAsync(vac.EmployerId);}
+
+                <div class="vacancy" >
+                    <div class="vacancy-position-salary">
+                        <h3>@vac.Position</h3>
+                        <h2>@vac.Salary грн</h2>
+                    </div>
+                    <span >@Employer.CompanyName</span>
+                    <span> &nbsp &nbsp @vac.Date </span>
+                    
+                    
+                </div>
+            </a>
+        }
+        @*else
+        {
+            <form asp-controller="Vacancy" asp-action="EditVacancy" method="post">
+                <a asp-controller="Vacancy" asp-action="ViewVacancyDetailResume" asp-route-id="@vac.Id">
+                
+                    @{var Employer = await UserManager.FindByIdAsync(vac.EmployerId);}
+
+                    <div class="vacancy mb-3" >
+                        <div class="vacancy-position-salary">
+                            <h3>@vac.Position</h3>
+                            <h2>@vac.Salary грн</h2>
+                    </div>
+                    <span >@Employer.CompanyName</span>
+                    <span> &nbsp &nbsp @vac.Date </span>
+                </div>
+                
+                </a> 
+                    <input hidden type="number" name="id" value="@vac.Id">
+                    <button style="height:20%;" class="w-100 mb-3 btn btn-lg btn-primary" >Редагувати</button>
+                </form>
+                <form asp-controller="Vacancy" asp-action="DeleteVacancy" method="post">
+                    <input hidden type="number" name="id" value="@vac.Id">
+                    <button style="height:20%;" class="w-100 mb-3 btn btn-lg btn-primary" >Видалити</button>
+                </form>
+        }*@
+
+            
+        }
+
+    </div>
+    
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
